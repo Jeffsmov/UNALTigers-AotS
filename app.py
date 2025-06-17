@@ -1,3 +1,4 @@
+from load_layer_files import load_layer_files
 import streamlit as st
 import geopandas as gpd
 import pandas as pd
@@ -8,6 +9,9 @@ import branca.colormap as cm
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Variables
+country_name = "USA"
+
 # Page config
 st.set_page_config(
     page_title="Risk and Climate Exposure in Haiti",
@@ -15,13 +19,7 @@ st.set_page_config(
 )
 
 # Layer paths
-LAYER_FILES = {
-    "Population": "./data/processed/h3_age_haiti_standardized.geojson",
-    "Natural Hazards": "./data/processed/h3_hazard_risks.geojson",
-    "Infrastructure": "./data/processed/h3_infra_indicators_user_friendly.geojson",
-    "Child Vulnerability": "./data/processed/h3_vulnerability_child.geojson",
-    "Weather Scenarios": "./data/processed/h3_meteorological_forecast.geojson"
-}
+LAYER_FILES = load_layer_files()
 
 COLOR_MAPS = {
     "Population": "YlGnBu_09",
@@ -33,7 +31,7 @@ COLOR_MAPS = {
 
 @st.cache_data
 def load_layer(layer_name: str) -> gpd.GeoDataFrame:
-    path = LAYER_FILES[layer_name]
+    path = LAYER_FILES[country_name][layer_name]
     gdf = gpd.read_file(path)
     if 'h3_index' not in gdf.columns:
         gdf['h3_index'] = gdf.index.astype(str)

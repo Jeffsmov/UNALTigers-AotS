@@ -195,3 +195,12 @@ cython_debug/
 
 # template stuff
 _template*
+
+# Cache, raw and processed data
+cache/
+data/processed
+data/raw
+
+# Jupyter
+notebooks/
+.jupyter

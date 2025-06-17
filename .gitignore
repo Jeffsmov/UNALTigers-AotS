@@ -195,3 +195,7 @@ cython_debug/
 
 # template stuff
 _template*
+
+*.geojson
+data/
+data_v2/
